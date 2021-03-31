@@ -1,4 +1,4 @@
-package test;
+package com.test.all.jdk.concurrent;
 
 public class TestVolatile {
     int testNumber = 0;

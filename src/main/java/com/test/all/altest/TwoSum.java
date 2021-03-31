@@ -1,4 +1,4 @@
-package al;
+package com.test.all.altest;
 
 import java.util.HashMap;
 import java.util.Map;

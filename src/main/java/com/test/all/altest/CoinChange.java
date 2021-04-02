@@ -17,14 +17,15 @@ public class CoinChange {
     public int coinChange(int[] coins, int amount) {
         int[] m =new int[amount+1];
         m[0]=0;
-        for(int i=0;i<=amount;i++){
-            int min =Integer.MAX_VALUE;
-            for(int j=0;j<coins.length;j++){{
-                if(i-coins[j]>=0&&m[i-coins[j]]<min){
-                    min =m[i-coins[j]]+1;
+        for (int i = 0; i <= amount; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int j = 0; j < coins.length; j++) {
+                {
+                    if (i - coins[j] >= 0 && m[i - coins[j]] < min) {
+                        min = m[i - coins[j]] + 1;
+                    }
                 }
-            }
-            m[i] = min;
+                m[i] = min;
             }
         }
         return m[amount]==Integer.MAX_VALUE?-1:m[amount];

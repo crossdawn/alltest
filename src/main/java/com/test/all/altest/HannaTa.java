@@ -21,4 +21,14 @@ public class HannaTa {
         }
     }
 
+    private static void  hn2(int n ,String a,String b ,String c){
+        if(n==1){
+            move(1,a,c);
+            return ;
+        }
+        hn(n-1,a,c,b);
+        move(n,a,c);
+        hn(n-1,b,c,a);
+    }
+
 }

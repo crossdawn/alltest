@@ -17,7 +17,7 @@ public class ChineseProverbClient {
         EventLoopGroup group=new NioEventLoopGroup();
         try
         {
-            Bootstrap b=new Bootstrap();
+            Bootstrap b = new Bootstrap();
             b.group(group)
                     .channel(NioDatagramChannel.class)
                     .option(ChannelOption.SO_BROADCAST, true)

@@ -48,7 +48,7 @@ public class NumSum3 {
         List<List<Integer>> ans = new ArrayList<>();
         // 第一个数选了i位置的数
         for(int i=0;i<nums.length-2;i++){
-            if(i==0||nums[i]==nums[i-1]){
+            if(i==0||nums[i]!=nums[i-1]){
                 List<List<Integer>> re =  twoSum1(nums,i,-nums[i]);
                 for(List<Integer> l:re){
                     l.add(0,nums[i]);

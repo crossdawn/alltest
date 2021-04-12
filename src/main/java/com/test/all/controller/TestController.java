@@ -1,13 +1,14 @@
 package com.test.all.controller;
 
-import com.test.all.mysql.TestDAO;
 import com.test.all.mysql.TestService;
 import com.test.all.redis.RedissonTestService;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.lang.management.ClassLoadingMXBean;
+import java.lang.management.ManagementFactory;
 
 @RequestMapping("/monitor")
 @RestController
@@ -29,9 +30,17 @@ public class TestController {
         return "1";
     }
 
-    @GetMapping("/redis")
-    public String redis() {
-        redissonTestService.redisTest();
+    @GetMapping("/class")
+    public String classT() {
+        try {
+            ClassLoadingMXBean classLoadingMXBean = ManagementFactory.getClassLoadingMXBean();
+            classLoadingMXBean.getLoadedClassCount();
+            classLoadingMXBean.getTotalLoadedClassCount();
+            classLoadingMXBean.getUnloadedClassCount();
+
+        }finally {
+
+        }
         return "1";
     }
 

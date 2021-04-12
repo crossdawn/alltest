@@ -12,13 +12,13 @@ public class Otest {
                 list.add(new Object());
             }
         }catch (Throwable e){
-//            e.printStackTrace();
+            e.printStackTrace();
             System.err.println(new Object());
         }
         System.out.println("134");
-        while (true){
-            list.add(new Object());
-        }
+//        while (true){
+//            list.add(new Object());
+//        }
     }
     public int change(int amount, int[] coins) {
         int len = coins.length;
@@ -30,6 +30,7 @@ public class Otest {
         }
         int[][] dp = new int[len][amount + 1];
         dp[0][0] = 1;
+
         for (int i = coins[0]; i <= amount; i += coins[0]) {
             dp[0][i] = 1;
         }

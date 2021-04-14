@@ -58,7 +58,7 @@ public class NumSum3 {
         }
         return ans;
     }
-    public static List<List<Integer>> twoSum1(int[] nums, int begin, int target) {
+    public static List<List<Integer>> twoSum2(int[] nums, int begin, int target) {
         int L =begin;
         int R =nums.length-1;
         List<List<Integer>> ans = new ArrayList<>();
@@ -75,6 +75,42 @@ public class NumSum3 {
                     ans.add(cur);
                 }
                 L++;
+            }
+        }
+        return ans;
+    }
+    public static List<List<Integer>> twoSum1(int[] nums, int begin, int target) {
+        int L=begin;
+        int R = nums.length-1;
+        List<List<Integer>> ans = new ArrayList<>();
+        while (L<R){
+            if(nums[L]+nums[R]>target){
+                R--;
+            }else if(nums[L]+nums[R]<target){
+                L++;
+            }else {
+                if(L==begin||nums[L]!=nums[L-1]){
+                    List<Integer> cur = new ArrayList<>();
+                    cur.add(L);
+                    cur.add(R);
+                    ans.add(cur);
+                }
+                L++;
+            }
+        }
+        return ans;
+    }
+
+    private List<List<Integer>> threeSum(int[] nums){
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int i=0;i<nums.length-1;i++){
+            if(i==0||nums[i]!=nums[i-1]){
+                List<List<Integer>> temp = twoSum1(nums,0,-nums[i]);
+                for (List<Integer> l :temp){
+                    l.add(0,nums[i]);
+                    ans.add(l);
+                }
             }
         }
         return ans;

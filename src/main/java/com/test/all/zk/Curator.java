@@ -42,11 +42,18 @@ public class Curator implements InitializingBean, DisposableBean {
 //        client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath("/locker/order/123");
 //        client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath("/locker/order/123");
 
-        InterProcessMutex lock = new InterProcessMutex(client, "/locker/order/123");
-        lock.acquire();
-        lock.release();
+        InterProcessMutex lock = new InterProcessMutex(client, "/locker/order/555");
+        for (int i =0;i<5;i++){
+            lock.acquire();
+        }
+        System.err.println(new String(client.getData().forPath("/locker/order/555")));
 
-//        client.create().withMode(CreateMode.EPHEMERAL).forPath("/data/lock/001");
+        String path= lock.getParticipantNodes().iterator().next();
+        lock.getParticipantNodes().forEach(x-> System.err.println(x));
+//        lock.release();
+        System.err.println(new String(client.getData().forPath(path)));
+
+        client.create().withMode(CreateMode.EPHEMERAL).forPath("/data/lock/001");
 
 //        System.err.println(      new String(client.getData().forPath("/data/test/777")) );
 //        System.err.println(client.getChildren().forPath("/data/test/777"));
@@ -71,4 +78,17 @@ public class Curator implements InitializingBean, DisposableBean {
     public void afterPropertiesSet() throws Exception {
 
     }
+
+    public void lock()throws Exception{
+        InterProcessMutex lock = new InterProcessMutex(client, "/locker/order/123");
+        lock.acquire();
+        lock2();
+        lock.release();
+    }
+    public void lock2()throws Exception{
+        InterProcessMutex lock = new InterProcessMutex(client, "/locker/order/123");
+        lock.acquire();
+        lock.release();
+    }
+
 }

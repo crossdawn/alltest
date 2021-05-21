@@ -3,6 +3,7 @@ package com.test.all.netty;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.epoll.EpollDatagramChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 
@@ -15,7 +16,7 @@ public class ChineseProverbServer {
             //UDP相对于TCP不需要在客户端和服务端建立实际的连接，因此不需要为连接（ChannelPipeline）设置handler
             Bootstrap b=new Bootstrap();
             b.group(bossGroup)
-                    .channel(NioDatagramChannel.class)
+                    .channel(EpollDatagramChannel.class)
                     .option(ChannelOption.SO_BROADCAST, true)
                     .handler(new ChineseProverbServerHandler());
             b.bind(port).sync().channel().closeFuture().await();

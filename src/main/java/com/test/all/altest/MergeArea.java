@@ -8,7 +8,10 @@ public class MergeArea {
     public static void main(String[] args) {
         int[][] intervals = {{1, 2}, {1, 3}, {3, 5}, {4, 6}, {7, 9}};
         Arrays.stream(merge(intervals)).forEach(x -> System.err.println(Arrays.toString(x)));
+    List list = new ArrayList<String>();
+    list.add(1);
     }
+
 
     private static int[][] merge(int[][] intervals) {
         List<int[]> result = new ArrayList<>();

@@ -2,7 +2,13 @@ package com.test.all.altest;
 
 public class CoinTest2 {
 
-
+    private static  int d(int[] array,int index,int rest){
+        int ways = 0;
+        for(int i=1;i*array[index]<rest;i++){
+            ways+=d(array,index+1,rest-i*array[index]);
+        }
+        return ways;
+    }
 
     // arr中都是正数且无重复值，返回组成aim的方法数，暴力递归
     public static int ways1(int[] arr, int aim) {

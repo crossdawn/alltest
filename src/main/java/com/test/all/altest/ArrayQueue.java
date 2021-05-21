@@ -1,5 +1,7 @@
 package com.test.all.altest;
 
+import java.util.ArrayList;
+
 public class ArrayQueue {
     private Object[] array;
     private int capacity;

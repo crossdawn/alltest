@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ListNode {
     int value;
@@ -20,21 +21,33 @@ public class ListNode {
         head1.next = head3;
         head3.next = head5;
 
-        ListNode head2 = new ListNode(2);
-        ListNode head4 = new ListNode(4);
-        ListNode head6 = new ListNode(6);
-        head2.next = head4;
-        head4.next = head6;
-        ListNode newhead = merge2(head1, head2);
-//        System.err.println(mid(newhead).value);
-        System.err.println(cycle(newhead));
+//        ListNode head2 = new ListNode(2);
+//        ListNode head4 = new ListNode(4);
+//        ListNode head6 = new ListNode(6);
+//        head2.next = head4;
+//        head4.next = head6;
+//        ListNode newhead = merge2(head1, head2);
+////        System.err.println(mid(newhead).value);
+//        System.err.println(cycle(newhead));
+        ListNode newhead =rev(head1);
         while (newhead != null) {
             System.err.println(newhead.value);
             newhead = newhead.next;
         }
     }
 
+    private void incr(AtomicInteger a){
+        int i = a.get();
+        if(i>=100){
+            return;
+        }
+        if(a.compareAndSet(i,i+1)){
+            incr(a);
+        }
+    }
+
     public static ListNode merge(ListNode head1, ListNode head2) {
+
         ListNode head = head1.value <= head2.value ? head1 : head2;
         ListNode cur1 = head.next;
         ListNode cur2 = head == head1 ? head2 : head1;
@@ -50,6 +63,25 @@ public class ListNode {
             pre = pre.next;
         }
         pre.next = cur1 != null ? cur1 : cur2;
+        return head;
+    }
+
+    public static ListNode merge3(ListNode head1, ListNode head2) {
+        ListNode head =head1.value>head2.value?head1:head2;
+        ListNode cur1 = head==head1?head1.next:head2.next;
+        ListNode cur2 = head==head1?head1.next:head2.next;
+        ListNode pre = head;
+        while (cur1!=null&&cur2!=null){
+            if(cur1.value<cur2.value){
+                pre.next=cur1;
+                pre= cur1;
+                cur1 = cur1.next;
+            }else {
+
+            }
+            pre = pre.next;
+        }
+        pre.next = cur1==null?cur2:cur1;
         return head;
     }
 
@@ -120,6 +152,18 @@ public class ListNode {
             fast = fast.next.next;
         }
         return slow;
+    }
+
+    public static ListNode rev(ListNode head) {
+        ListNode pre =null;
+        ListNode cur =head;
+        while (cur!=null){
+            ListNode next =cur.next;
+            cur.next=pre;
+            pre =cur;
+            cur =next;
+        }
+        return pre;
     }
 
     private static int[][] merge(int[][] intervals) {

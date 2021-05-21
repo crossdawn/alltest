@@ -34,6 +34,7 @@ public class Curator implements InitializingBean, DisposableBean {
     }
 
     public static void main(String[] args) throws Exception {
+        client.create().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath("/data/lock/111");
 //       client.create().forPath("/locker/order/123");
 //        client.create().forPath("/data/test");
 //        client.create().forPath("/data/test/1");
@@ -47,7 +48,13 @@ public class Curator implements InitializingBean, DisposableBean {
             lock.acquire();
         }
         System.err.println(new String(client.getData().forPath("/locker/order/555")));
-
+        new Thread(()->{
+            try {
+                lock.acquire();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
         String path= lock.getParticipantNodes().iterator().next();
         lock.getParticipantNodes().forEach(x-> System.err.println(x));
 //        lock.release();

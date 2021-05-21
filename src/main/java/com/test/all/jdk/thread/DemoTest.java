@@ -16,6 +16,7 @@ public class DemoTest {
         });
         t.setDaemon(true);
         t.start();
+//        t.join();
         System.err.println("主线程开启");
     }
 }

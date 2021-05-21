@@ -13,4 +13,12 @@ public class Person implements Serializable {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public int getName() {
+        return name;
+    }
+
+    public void setName(int name) {
+        this.name = name;
+    }
 }

@@ -47,4 +47,43 @@ public class AtomicTest {
         System.err.println(Thread.currentThread().getName() + "重试");
         return incr(a);
     }
+
+    public static void heapInsert(int[] array,int i){
+        int cur  = i;
+        int parent = (i-1)/2;
+        while (array[cur]>array[parent]){
+            swap(array,cur,parent);
+            cur = parent;
+            parent = (cur-1)/2;
+        }
+    }
+    public static void swap(int[] array,int a,int b){
+        int temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
+    }
+    public static void heapify(int[] array,int i,int size){
+        int left = 2*i+1;
+        int right = 2*i+2;
+        int index = i;
+        while (array[index]>array[left]){
+            int large = 0;
+            if(array[left]>array[right]){
+                large = left;
+            }else {
+                large = right;
+            }
+            if(array[index]>array[large]){
+                large = index;
+            }
+            if(index==large){
+               break;
+            }
+            swap(array,index,large);
+            index = large;
+            left = 2*large+1;
+                    right =  2*large+2;
+        }
+    }
+
 }

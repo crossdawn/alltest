@@ -1,7 +1,7 @@
 package com.test.all.jdk.concurrent;
 
 public class TestVolatile {
-    int testNumber = 0;
+    volatile int testNumber = 0;
     public static void main(String[] args) throws InterruptedException {
         TestVolatile testVolatile = new TestVolatile();
         Thread t1 = new Thread(()->{

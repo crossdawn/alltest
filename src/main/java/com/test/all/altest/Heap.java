@@ -1,13 +1,19 @@
 package com.test.all.altest;
 
+import com.test.all.way.Array;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Heap {
     public static void main(String[] args) {
         int[] array = {5,3,2,4,1};
-        heapSort(array);
-        System.err.println(Arrays.toString(array));
+//        heapSort(array);
+//        System.err.println(Arrays.toString(array));
+        List<List<Integer>> list = permute(array);
+        list.forEach(x-> System.err.println(Arrays.toString(x.toArray())));
     }
     //堆排序
     public static void heapSort(int[] arr) {
@@ -154,4 +160,42 @@ public class Heap {
             nums[right] =temp;
         }
     }
+
+    public int fastPow(int a,int n){
+        int ans = 1;
+        int base = a;
+        while (n!=0){
+            if((a&n)!=0){
+                ans = ans*base;
+            }
+            n=n>>1;
+            base =base*base;
+        }
+        return ans;
+    }
+
+    public static List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        boolean[] used = new boolean[nums.length];
+        process(nums,0,used,new ArrayList<>(),result);
+        return result;
+    }
+
+    public static void process(int[] nums,int index,boolean[] used,List<Integer> path,List<List<Integer>> result) {
+        if(index==nums.length){
+            result.add(new ArrayList<>(path));
+            return ;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(!used[i]){
+                path.add(nums[i]);
+                used[i]=true;
+                process(nums,index+1,used,path,result);
+                path.remove(path.size()-1);
+                used[i]=false;
+            }
+        }
+    }
+
+
 }

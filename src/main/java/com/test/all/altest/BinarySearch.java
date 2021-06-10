@@ -7,8 +7,8 @@ package com.test.all.altest;
 public class BinarySearch {
     public static void main(String[] args) {
         int[] array = {-1, 3, 3, 4, 5};
-        System.err.println(bsearch(array, 2));
-        System.err.println(bsearch2(array, 2,0,array.length-1));
+        System.err.println(bsearch(array, 3));
+        System.err.println(bsearch2(array, 3,0,array.length-1));
     }
 
     public static int bsearch(int[] array, int key) {
@@ -43,6 +43,15 @@ public class BinarySearch {
             return bsearch2(array,key,L,M-1);
         }
     }
+
+
+//    public static int bsearch2(int[] array,int key,int L,int R){
+//        if(key<array[L]||key>array[R]){
+//            return -1;
+//        }
+//
+//        while (L<=R){int M =(L+R)/2;}
+//    }
 
 }
 

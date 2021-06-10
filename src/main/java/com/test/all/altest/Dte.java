@@ -29,4 +29,16 @@ public class Dte {
         return dp[array.length - 1];
     }
 
+    public static int a(int[] array){
+        int[] dp =new int[array.length];
+        for(int i=0;i<array.length;i++){
+            if (i == 0) {
+                dp[0] = array[0];
+            } else if (i == 1) {
+                dp[1] = Math.max(array[0], array[1]);
+            }
+            dp[i] = Math.max(dp[i-1],+dp[i-2])+array[i];
+        }
+        return dp[array.length-1];
+    }
 }

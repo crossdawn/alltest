@@ -1,11 +1,14 @@
 package com.test.all.altest;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Windows {
     public static void main(String[] args){
-    int[] arr = {4,3,5,4,3,3,6,7};
+    int[] arr = {4,2,5,6,3,1,2,4};
     printArray(getMaxWindow(arr,3));
+        System.err.println(partition(arr,0,arr.length-1));
+        System.err.println(Arrays.toString(arr));
 }
 
     public static int[] getMaxWindow2(int[] arr, int w) {
@@ -57,6 +60,38 @@ public class Windows {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i]+" ");
         }
+    }
+
+    public static int partition(int[] array,int left,int right){
+        int pivot = array[0];
+        int L =left;
+        int R =right;
+        while(L<R){
+            while (L<R&&array[R]>pivot){
+                R--;
+            }
+            array[L] =array[R];
+            while (L<R&&array[L]<=pivot){
+                L++;
+            }
+            array[R] =array[L];
+
+        }
+        array[L] = pivot;
+        return L;
+    }
+
+    public static int k(int[] array,int k){
+        int index = partition(array,0,array.length-1);
+        while (index!=k-1){
+            if(index>k-1){
+                index = partition(array,0,index-1);
+            }else {
+                index =partition(array,index+1,array.length-1);
+
+            }
+        }
+        return array[index];
     }
 
 

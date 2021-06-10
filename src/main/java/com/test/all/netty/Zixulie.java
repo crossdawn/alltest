@@ -16,27 +16,31 @@ public class Zixulie {
 
     public static void main(String[] args)
     {
-        ListNode listNode1 = new ListNode(1);
-        ListNode listNode2 = new ListNode(2);
-        ListNode listNode3 = new ListNode(3);
-        ListNode listNode4 = new ListNode(4);
-        ListNode listNode5 = new ListNode(5);
-        ListNode listNode6 = new ListNode(6);
-
-        listNode1.next=listNode2;
-        listNode2.next=listNode3;
-        listNode3.next=listNode4;
-        listNode4.next=listNode5;
-        listNode5.next=listNode6;
-
-
-        ListNode head = rev(listNode1,2,4);
-        while (head!=null){
-            System.err.println(head.value);
-            head =head.next;
-        }
+//        ListNode listNode1 = new ListNode(1);
+//        ListNode listNode2 = new ListNode(2);
+//        ListNode listNode3 = new ListNode(3);
+//        ListNode listNode4 = new ListNode(4);
+//        ListNode listNode5 = new ListNode(5);
+//        ListNode listNode6 = new ListNode(6);
+//
+//        listNode1.next=listNode2;
+//        listNode2.next=listNode3;
+//        listNode3.next=listNode4;
+//        listNode4.next=listNode5;
+//        listNode5.next=listNode6;
+//
+//
+//        ListNode head = rev(listNode1,2,4);
+//        while (head!=null){
+//            System.err.println(head.value);
+//            head =head.next;
+//        }
 //        System.out.println(f("ac","abcd")); //2
 //        System.out.println(f("acebbcde1133","xya33bc11de")); //5
+        System.err.println(lcstr("1234","123"));
+        System.err.println(findLongestCommonSubstring("1234","123"));
+
+        System.err.println(findLongestCommonSubstring0("1234","123"));
     }
 
     public static int findLCS(String A, int n, String B, int m) {
@@ -204,6 +208,90 @@ public class Zixulie {
                 cur = last.next;
             }
         }
+    }
+    public static String lcstr(String s1,String s2){
+        int m = s1.length();
+        int n = s2.length();
+        int[][] dp = new int[m][n];
+        int maxStart = 0;
+        int maxLength =0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(s1.charAt(i)==s2.charAt(j)){
+                    if(i>0&&j>0){
+                        dp[i][j] = dp[i-1][j-1] +1;
+                    }else {
+                        dp[i][j]=1;
+                    }
+                    if(maxLength<dp[i][j]){
+                        maxLength = dp[i][j];
+                        maxStart = i-maxLength+1;
+                    }
+                }else {
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        return s1.substring(maxStart,maxStart+maxLength);
+    }
+
+    public static String lcseq(String s1,String s2){
+        int m = s1.length();
+        int n = s2.length();
+        int[][] dp = new int[m][n];
+        int maxStart = 0;
+        int maxLength =0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(s1.charAt(i)==s2.charAt(j)){
+                    dp[i+1][j+1] =dp[i][j]+1;
+                }else {
+                    dp[i+1][j+1] = Math.max(dp[i+1][j],dp[i][j+1]);
+                }
+            }
+        }
+        return s1.substring(maxStart,maxStart+maxLength);
+    }
+
+    public static int ed(String s1,String s2){
+        int m = s1.length();
+        int n = s2.length();
+        int[][] dp = new int[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(s1.charAt(i)==s2.charAt(j)){
+                    dp[i+1][j+1] =dp[i][j];
+                }else {
+                    dp[i+1][j+1] = Math.min(dp[i+1][j]+1,Math.min(dp[i][j+1]+1,dp[i][j]+1));
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    public static void quick(int[] array,int low ,int high){
+        int index = partition(array,low,high);
+        quick(array,low ,index-1);
+        quick(array,index+1 ,high);
+
+    }
+
+    public static int partition(int[] array,int low,int high){
+        int pivot =array[0];
+        int L= low;
+        int R = high;
+        while (L<=R){
+            while (L<=R&&array[L]<pivot){
+                L++;
+            }
+            array[L] =pivot;
+            while (L<=R&&array[R]>pivot){
+                R--;
+            }
+            array[R] =pivot;
+            array[L] = pivot;
+        }
+        return L;
     }
 
 }

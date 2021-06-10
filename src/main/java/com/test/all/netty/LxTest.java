@@ -1,10 +1,26 @@
 package com.test.all.netty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LxTest {
     public static void main(String args[]) {
         String str="12345";
         allContinuousSubArray(str);
 
+    }
+    private static void perm(int[] array, int index, List<String> sub,List<List<String>> result) {
+       if(index ==array.length){
+           result.add(new ArrayList<>(sub));
+       }else {
+           for(int i =index;index<array.length;i++){
+               if(!sub.contains(array[index]+"")){
+                   sub.add(array[index]+"");
+                   perm(array,index+1,sub,result);
+                   sub.remove(sub.size()-1);
+               }
+           }
+       }
     }
 
     private static void allContinuousSubArray(String str) {

@@ -117,4 +117,13 @@ public class Seq {
         }
     }
 
+    public void print(int[] array ,int index){
+        if (index==array.length) {
+           return;
+        }
+        System.err.println(array[index]);
+        print(array,++index);
+    }
+
+
 }

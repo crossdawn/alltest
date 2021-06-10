@@ -1,18 +1,21 @@
 package com.test.all.controller;
 
+import com.test.all.jdk.thread.Th;
 import com.test.all.mysql.TestService;
 import com.test.all.redis.RedissonTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.ManagementFactory;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.Objects;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 @RequestMapping("/monitor")
 @RestController
@@ -23,6 +26,26 @@ public class TestController {
     @Autowired
     private RedissonTestService redissonTestService;
 
+
+    private  int b;
+
+    public void getA() {
+        b=100;
+    }
+
+    @GetMapping(value = "/dead2")
+    @Deprecated
+    public Integer dead2(String flag) {
+        if(Objects.equals(1+"",flag)){
+            getA();
+        }
+        new Thread(()->{
+            if(b!=100){
+                System.err.println("dsfdsfds");
+            }
+        }).start();
+        return b;
+    }
     @GetMapping("/test")
     public String monitorHttp() {
         return "OK";
@@ -30,8 +53,7 @@ public class TestController {
 
     @GetMapping("/db")
     public String db() {
-        testService.trx();
-        return "1";
+        return testService.trx();
     }
     static class Num{
         int n =0;
@@ -41,12 +63,18 @@ public class TestController {
         }
     }
     static final Num a = new Num(1);
+
     @GetMapping("/a")
-    public String a(String b) {
+    public String a(@RequestParam Integer b, HttpServletResponse response) {
         final int c;
 
-        if("1".equals(b)){
+        if(Objects.equals(1,b)){
             a.n =1000;
+        }
+        if(Objects.equals(2,b)){
+           while (true){
+               System.err.println("死循环");
+           }
         }
         return ""+a.n;
     }
@@ -62,6 +90,7 @@ public class TestController {
 //        ArrayBlockingQueue;
 //        LinkedBlockingQueue;
 //        ThreadPoolExecutor.DiscardOldestPolicy
+
         return "1";
     }
 

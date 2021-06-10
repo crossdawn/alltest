@@ -2,10 +2,10 @@ package com.test.all.altest;
 
 public class CoinTest2 {
 
-    private static  int d(int[] array,int index,int rest){
+    private static int d(int[] array, int index, int rest) {
         int ways = 0;
-        for(int i=1;i*array[index]<rest;i++){
-            ways+=d(array,index+1,rest-i*array[index]);
+        for (int i = 1; i * array[index] < rest; i++) {
+            ways += d(array, index + 1, rest - i * array[index]);
         }
         return ways;
     }
@@ -22,17 +22,17 @@ public class CoinTest2 {
         // base case
         // 当在面值数组的arr.length，此时越界，没有货币可以选择。
         // 如果当前目标金额就是0，那么存在一种方法，如果目标金额不为0，返回0中方法
-        if(index == arr.length) {
-            return rest == 0 ? 1 : 0 ;
+        if (index == arr.length) {
+            return rest == 0 ? 1 : 0;
         }
 
         // 普遍位置
         int ways = 0;
         // 从0号位置开始枚举，选择0张，1张，2张等
         // 条件是张数乘以选择的面值，不超过木匾面值rest
-        for(int zhang = 0;  zhang * arr[index] <= rest ;zhang++) {
+        for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
             // 方法数加上除去当前选择后所剩面额到下一位置的选择数，递归
-            ways += process1(arr, index + 1, rest -  (zhang * arr[index])  );
+            ways += process1(arr, index + 1, rest - (zhang * arr[index]));
         }
         return ways;
     }
@@ -44,16 +44,16 @@ public class CoinTest2 {
             return 0;
         }
         // 缓存结构，且只和index和rest有关，跟arr无关
-        int[][] dp = new int[arr.length+1][aim+1];
+        int[][] dp = new int[arr.length + 1][aim + 1];
         // 一开始所有的过程，都没有计算呢，dp二维表初始化为-1
         // dp[..][..]  = -1
-        for(int i = 0 ; i < dp.length; i++) {
-            for(int j = 0 ; j < dp[0].length; j++) {
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
                 dp[i][j] = -1;
             }
         }
         // 缓存结构向下传递
-        return process2(arr, 0, aim , dp);
+        return process2(arr, 0, aim, dp);
     }
 
     // 如果index和rest的参数组合，是没算过的，dp[index][rest] == -1
@@ -61,17 +61,17 @@ public class CoinTest2 {
     public static int process2(int[] arr,
                                int index, int rest,
                                int[][] dp) {
-        if(dp[index][rest] != -1) {
+        if (dp[index][rest] != -1) {
             return dp[index][rest];
         }
-        if(index == arr.length) {
-            dp[index][rest] = rest == 0 ? 1 :0;
-            return  dp[index][rest];
+        if (index == arr.length) {
+            dp[index][rest] = rest == 0 ? 1 : 0;
+            return dp[index][rest];
         }
         int ways = 0;
-        for(int zhang = 0;  zhang * arr[index] <= rest ;zhang++) {
+        for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
             // 返回之前加入缓存
-            ways += process2(arr, index + 1, rest -  (zhang * arr[index]) , dp );
+            ways += process2(arr, index + 1, rest - (zhang * arr[index]), dp);
         }
         // 返回之前加入缓存
         dp[index][rest] = ways;
@@ -92,12 +92,12 @@ public class CoinTest2 {
         dp[N][0] = 1;// dp[N][1...aim] = 0;
 
         // 每个位置依赖自己下面的位置，那么我们从下往上循环
-        for(int index = N - 1; index >= 0; index--) {
+        for (int index = N - 1; index >= 0; index--) {
             // rest从左往右
-            for(int rest = 0; rest <= aim; rest++) {
+            for (int rest = 0; rest <= aim; rest++) {
                 int ways = 0;
-                for(int zhang = 0;  zhang * arr[index] <= rest ;zhang++) {
-                    ways += dp[index + 1] [rest -  (zhang * arr[index])];
+                for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
+                    ways += dp[index + 1][rest - (zhang * arr[index])];
                 }
                 dp[index][rest] = ways;
             }
@@ -115,10 +115,10 @@ public class CoinTest2 {
         int N = arr.length;
         int[][] dp = new int[N + 1][aim + 1];
         dp[N][0] = 1;// dp[N][1...aim] = 0;
-        for(int index = N - 1; index >= 0; index--) {
-            for(int rest = 0; rest <= aim; rest++) {
-                dp[index][rest] = dp[index+1][rest];
-                if(rest - arr[index] >= 0) {
+        for (int index = N - 1; index >= 0; index--) {
+            for (int rest = 0; rest <= aim; rest++) {
+                dp[index][rest] = dp[index + 1][rest];
+                if (rest - arr[index] >= 0) {
                     dp[index][rest] += dp[index][rest - arr[index]];
                 }
             }
@@ -126,13 +126,36 @@ public class CoinTest2 {
         return dp[0][aim];
     }
 
+    public static int process5(int[] array, int index, int rest) {
+        if (index == array.length) {
+            return rest == 0 ? 1 : 0;
+        }
+        int ways = 0;
+        for (int zhang = 0; zhang * array[index] <= rest; zhang++) {
+            ways += process5(array, index + 1, rest - zhang * array[index]);
+        }
+        return ways;
+    }
+
+    public static int ways5(int[] array, int rest) {
+        return process5(array, 0, rest);
+    }
 
     public static void main(String[] args) {
-        int[] arr = { 5, 10,50,100 };
+        int[] arr = {5, 10, 50, 100};
         int sum = 1000;
         System.out.println(ways1(arr, sum));
         System.out.println(ways2(arr, sum));
         System.out.println(ways3(arr, sum));
         System.out.println(ways4(arr, sum));
+        System.out.println(ways5(arr, sum));
+        Integer a =1;
+        Short s =1;
+//        Long l =1L;
+        System.err.println(System.identityHashCode(a));
+        System.err.println(System.identityHashCode(s));
+//        System.err.println(System.identityHashCode(l));
+
+
     }
 }

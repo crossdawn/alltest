@@ -18,30 +18,36 @@ public class ListNode {
         ListNode head1 = new ListNode(1);
         ListNode head3 = new ListNode(3);
         ListNode head5 = new ListNode(5);
-        head1.next = head3;
-        head3.next = head5;
 
-//        ListNode head2 = new ListNode(2);
-//        ListNode head4 = new ListNode(4);
-//        ListNode head6 = new ListNode(6);
+        ListNode head2 = new ListNode(2);
+        ListNode head4 = new ListNode(4);
+        ListNode head6 = new ListNode(6);
+        head1.next = head2;
+        head2.next = head3;
+        head3.next = head4;
+        head4.next = head5;
+        head5.next = head6;
+
+        ListNode newhead = revv(head1,1,1);
+
 //        head2.next = head4;
 //        head4.next = head6;
 //        ListNode newhead = merge2(head1, head2);
 ////        System.err.println(mid(newhead).value);
 //        System.err.println(cycle(newhead));
-        ListNode newhead =rev(head1);
+//        ListNode newhead =rev(head1);
         while (newhead != null) {
             System.err.println(newhead.value);
             newhead = newhead.next;
         }
     }
 
-    private void incr(AtomicInteger a){
+    private void incr(AtomicInteger a) {
         int i = a.get();
-        if(i>=100){
+        if (i >= 100) {
             return;
         }
-        if(a.compareAndSet(i,i+1)){
+        if (a.compareAndSet(i, i + 1)) {
             incr(a);
         }
     }
@@ -67,21 +73,21 @@ public class ListNode {
     }
 
     public static ListNode merge3(ListNode head1, ListNode head2) {
-        ListNode head =head1.value>head2.value?head1:head2;
-        ListNode cur1 = head==head1?head1.next:head2.next;
-        ListNode cur2 = head==head1?head1.next:head2.next;
+        ListNode head = head1.value > head2.value ? head1 : head2;
+        ListNode cur1 = head == head1 ? head1.next : head2.next;
+        ListNode cur2 = head == head1 ? head1.next : head2.next;
         ListNode pre = head;
-        while (cur1!=null&&cur2!=null){
-            if(cur1.value<cur2.value){
-                pre.next=cur1;
-                pre= cur1;
+        while (cur1 != null && cur2 != null) {
+            if (cur1.value < cur2.value) {
+                pre.next = cur1;
+                pre = cur1;
                 cur1 = cur1.next;
-            }else {
+            } else {
 
             }
             pre = pre.next;
         }
-        pre.next = cur1==null?cur2:cur1;
+        pre.next = cur1 == null ? cur2 : cur1;
         return head;
     }
 
@@ -155,15 +161,74 @@ public class ListNode {
     }
 
     public static ListNode rev(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+    public static ListNode rev2(ListNode head) {
         ListNode pre =null;
         ListNode cur =head;
         while (cur!=null){
-            ListNode next =cur.next;
-            cur.next=pre;
+            ListNode next = cur.next;
+            cur.next =pre;
             pre =cur;
-            cur =next;
+            cur = next;
         }
         return pre;
+    }
+
+    public static ListNode revv(ListNode head, int from, int to) {
+        ListNode head2 = null;
+        ListNode head3 = null;
+        //1 2 3 4 5 6
+        ListNode temp = head;
+        int count = 0;
+        while (temp != null) {
+            count++;
+            if (count == from - 1) {
+                head2 = temp;
+            }
+            if (count == to + 1) {
+                head3 = temp;
+            }
+            temp = temp.next;
+        }
+        if(from>to||from<1||to>count){
+            return null;
+        }
+//        //
+//        ListNode newHead2 = null;
+//        if (head2 == null) {
+//            newHead2 = head;
+//        } else {
+//            newHead2 = head2.next;
+//        }
+//
+//        ListNode pre = head3;
+//        ListNode cur = newHead2;
+//        while (cur != head3) {
+//            ListNode next = cur.next;
+//            cur.next = pre;
+//            pre = cur;
+//            cur = next;
+//        }
+//        if (head2 == null) {
+//            return pre;
+//        }
+//        head2.next = pre;
+        ListNode newHead2 = null;
+        if(head2==null){
+            newHead2 =head;
+        }
+        ListNode pre =head3;
+        ListNode cur = newHead2;
+        return head;
     }
 
     private static int[][] merge(int[][] intervals) {
@@ -210,7 +275,7 @@ public class ListNode {
         return result.toArray(new int[0][]);
     }
 
-//    private static int[] merge(int[]a,int[]b) {
+    //    private static int[] merge(int[]a,int[]b) {
 //        int a1 = Math.min(a[0], b[0]);
 //        int[] c = new int[a.length+b.length];
 //        int ai = 0 ;
@@ -220,69 +285,69 @@ public class ListNode {
 ////        }
 //
 //    }
-static class Solution {
-    public static ListNode sortList(ListNode head) {
-        return quickSort(head ,null);
-    }
-    public static ListNode quickSort2(ListNode head ,ListNode end){
-        if(head ==end||head.next==end){
-            return head;
+    static class Solution {
+        public static ListNode sortList(ListNode head) {
+            return quickSort(head, null);
         }
-        ListNode lhead =head,tail =head,p=head.next;
-        while (p.next!=null){
-            ListNode next =p.next;
-            if(p.value<head.value){
-                p.next =lhead;
-                lhead=p;
-            }else {
-                tail.next = p;
-                tail=p;
+
+        public static ListNode quickSort2(ListNode head, ListNode end) {
+            if (head == end || head.next == end) {
+                return head;
             }
-            p = next;
-        }
-        tail.next=end;
-        ListNode node = quick(lhead,head);
-        head.next = quick(head.next,tail);
-        return node;
-    }
-
-    public static ListNode quickSort(ListNode head ,ListNode end){
-        if(head ==end || head.next ==end) {
-            return head;
-        }
-        ListNode lhead = head ,utail = head ,p = head.next;
-        while (p != end){
-            ListNode next = p.next;
-            if(p.value < head.value){//头插
-                p.next = lhead;
-                lhead = p;
+            ListNode lhead = head, tail = head, p = head.next;
+            while (p.next != null) {
+                ListNode next = p.next;
+                if (p.value < head.value) {
+                    p.next = lhead;
+                    lhead = p;
+                } else {
+                    tail.next = p;
+                    tail = p;
+                }
+                p = next;
             }
-            else { //尾插
-                utail.next = p;
-                utail = p;
-            }
-            p = next;
+            tail.next = end;
+            ListNode node = quick(lhead, head);
+            head.next = quick(head.next, tail);
+            return node;
         }
-        utail.next = end;
 
-        ListNode node = quickSort(lhead, head);
-        head.next =  quickSort(head.next, end);
-        return node;
+        public static ListNode quickSort(ListNode head, ListNode end) {
+            if (head == end || head.next == end) {
+                return head;
+            }
+            ListNode lhead = head, utail = head, p = head.next;
+            while (p != end) {
+                ListNode next = p.next;
+                if (p.value < head.value) {//头插
+                    p.next = lhead;
+                    lhead = p;
+                } else { //尾插
+                    utail.next = p;
+                    utail = p;
+                }
+                p = next;
+            }
+            utail.next = end;
+
+            ListNode node = quickSort(lhead, head);
+            head.next = quickSort(head.next, end);
+            return node;
+        }
+
+        public static void main(String[] args) {
+            ListNode listNode5 = new ListNode(5);
+            ListNode listNode3 = new ListNode(3);
+            ListNode listNode2 = new ListNode(2);
+            ListNode listNode1 = new ListNode(1);
+            listNode5.next = listNode3;
+            listNode3.next = listNode2;
+            listNode2.next = listNode1;
+            quickSort(listNode5, null);
+
+
+        }
     }
-
-    public static void main(String[] args) {
-        ListNode listNode5 = new ListNode(5);
-        ListNode listNode3 = new ListNode(3);
-        ListNode listNode2 = new ListNode(2);
-        ListNode listNode1 = new ListNode(1);
-        listNode5.next =listNode3;
-        listNode3.next =listNode2;
-        listNode2.next =listNode1;
-       quickSort(listNode5,null);
-
-
-    }
-}
 
 
 }

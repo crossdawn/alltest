@@ -4,17 +4,8 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-
 @ChannelHandler.Sharable
-public class MyServerHandler extends SimpleChannelInboundHandler<Object> {
-    private static AtomicInteger atomicInteger = new AtomicInteger(0);
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.err.println("读取到了客户端的数据"+atomicInteger.incrementAndGet()+ctx.channel().remoteAddress().toString());
-        ctx.channel().writeAndFlush("123123213");
-    }
+public class MyClientHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
@@ -37,8 +28,6 @@ public class MyServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        System.err.println("防止closewait太多");
-        ctx.channel().close();
         System.err.println("channelInactive");
     }
 
@@ -60,5 +49,11 @@ public class MyServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         super.exceptionCaught(ctx, cause);
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.err.println("从服务端返回"+msg);
+
     }
 }

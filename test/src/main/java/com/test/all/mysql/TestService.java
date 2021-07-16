@@ -2,6 +2,7 @@ package com.test.all.mysql;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
@@ -9,8 +10,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 @Component
 public class TestService  {
-//    @Autowired
-//    private TestDAO testDAO;
+    @Autowired
+    private TestDAO testDAO;
 
     @HystrixCommand(commandProperties = {
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2"),
@@ -18,21 +19,22 @@ public class TestService  {
     },fallbackMethod = "hiError")
     @Transactional
     public String trx(){
-//        testDAO.insert();
+        testDAO.insert();
 ////        int i=1/0;
 //        testDAO.insert();
 //insert文章
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
             @Override
             public void afterCommit() {
-                System.err.println("发送消息了拉利");
+                System.err.println("事务提交后发消息");
             }
         });
-                int i=1/0;
-                return "hello";
+        int i=1/0;
+        return "hello";
     }
 
     public String hiError() {
-        return "Hystrix fallback";
+        return "降级";
     }
+
 }

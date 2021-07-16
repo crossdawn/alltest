@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Tt {
     public static void main(String[] args) {
         int[] array ={1,2,3,4,5,6,7,8,9};
-        p("",array,5);
+        p("",array,1);
     }
     private static void p(String s ,int[] array,int n){
         if(n==1){

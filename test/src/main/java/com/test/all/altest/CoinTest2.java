@@ -37,6 +37,34 @@ public class CoinTest2 {
         return ways;
     }
 
+    private static int ways2(int[] arr,int index,int rest){
+        if(index==arr.length){
+            if(rest==0){
+                return 1;
+            }
+            return 0;
+        }
+        int ways=0;
+        for(int zhang=0;zhang*arr[index]<=rest;zhang++){
+            ways+=ways2( arr,index+1, rest-zhang*arr[index]);
+        }
+        return ways;
+    }
+
+    public static int coin(int[] coins,int amount){
+        int[] m =new int[amount+1];
+        for(int i =0;i<amount;i++){
+            int min = Integer.MAX_VALUE;
+            for(int j =0;i<coins.length;j++){
+                if(i-coins[j]>0&&m[i-coins[j]]<min){
+                  min =m[i-coins[j]] +1;
+                }
+            }
+            m[i] = min;
+        }
+        return m[amount]==Integer.MAX_VALUE?-1:m[amount];
+    }
+
 
     // ways1暴力递归，改为记忆化搜索。ways2为记忆化搜索版本
     public static int ways2(int[] arr, int aim) {

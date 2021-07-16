@@ -1,4 +1,4 @@
-package com.test.all;
+package com.test.all.dlock;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;

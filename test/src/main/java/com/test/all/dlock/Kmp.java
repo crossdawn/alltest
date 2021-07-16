@@ -1,4 +1,4 @@
-package com.test.all;
+package com.test.all.dlock;
 
 public class Kmp {
     public static boolean isRotation(String a, String b) {

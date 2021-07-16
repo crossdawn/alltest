@@ -11,6 +11,8 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 public class ChineseProverbClient {
     public void run(int port)throws Exception{
@@ -39,15 +41,38 @@ public class ChineseProverbClient {
             group.shutdownGracefully();
         }
     }
-
-    public static void main(String[] args)throws Exception
-    {
-        int port=8888;
-        if (args!=null&&args.length>0)
-        {
-            port=Integer.valueOf(args[0]);
+    public int fib(int n) {
+        if (n < 2) {
+            return n;
         }
-        new ChineseProverbClient().run(port);
+        int p = 0, q = 0, r = 1;
+        for (int i = 2; i <= n; ++i) {
+            p = q;
+            q = r;
+            r = p + q;
+        }
+        return r;
+    }
+
+
+
+    public static void main(String[] args)throws Exception {
+        int port=9999;
+
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
+            for(int i =0;i<5;i++){
+                new Thread(()->{
+                    try{
+                        ChineseProverbClient client =new ChineseProverbClient();
+                        cyclicBarrier.await();
+                        client.run(port);
+                        System.err.println("发送");
+                    }catch (Exception e){
+
+                    }
+
+                }).start();
+        }
     }
 
 }

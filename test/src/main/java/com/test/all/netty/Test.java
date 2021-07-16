@@ -31,7 +31,7 @@ public class Test {
         System.err.println(threadPoolExecutor.getCorePoolSize());
         f.cancel(true);
         System.err.println(threadPoolExecutor.getCorePoolSize());
-
+        threadPoolExecutor.shutdown();
         threadPoolExecutor.shutdownNow();
     }
 }

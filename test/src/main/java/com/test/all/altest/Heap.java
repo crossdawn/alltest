@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Heap {
-    public static void main(String[] args) {
+    public static void main(String[] args)throws NullPointerException {
         int[] array = {5,3,2,4,1};
 //        heapSort(array);
 //        System.err.println(Arrays.toString(array));
@@ -91,6 +91,16 @@ public class Heap {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
+    }
+
+    private void sort1(int[] arr){
+        for(int i=0;i<arr.length-1;i++){
+            for(int j=0;i<arr.length-1-i;i++){
+                if(arr[j]>arr[j+1]){
+//                    swap();
+                }
+            }
+        }
     }
 
     public void heapInsert12(int[] array){

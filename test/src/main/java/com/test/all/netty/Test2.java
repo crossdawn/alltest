@@ -1,14 +1,16 @@
 package com.test.all.netty;
 
+import java.util.concurrent.TimeUnit;
+
 public class Test2 {
     public static void main(String[] args) {
 
         Thread t1 = new Thread(()->{
             try {
-//                System.err.println("初始"+Thread.interrupted());
-//                System.err.println("初始"+Thread.interrupted());
+                System.err.println("初始"+Thread.interrupted());
+                System.err.println("初始"+Thread.interrupted());
 
-//                TimeUnit.SECONDS.sleep(3);
+                TimeUnit.SECONDS.sleep(3);
                 for(int i=0; i<500000; i++){
                     System.out.println("i="+(i+1));
                 }

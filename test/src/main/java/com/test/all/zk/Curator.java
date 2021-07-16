@@ -42,23 +42,23 @@ public class Curator implements InitializingBean, DisposableBean {
         client.create().creatingParentContainersIfNeeded().withMode(CreateMode.EPHEMERAL).forPath("/data/lock/002","hello".getBytes());
 //        client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath("/locker/order/123");
 //        client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath("/locker/order/123");
-
-        NodeCache nodeCache = null;
-        nodeCache.start(true);
+        client.sync().wait();
+//        NodeCache nodeCache = null;
+//        nodeCache.start(true);
         // 如果为true则首次不会缓存节点内容到cache中，默认为false,设置为true首次不会触发监听事件
 
 
-        nodeCache.getListenable().addListener(new NodeCacheListener(){
-
-            @Override
-            public void nodeChanged() throws Exception {
-                // 节点发生变化，回调方法
-                byte[] ret = nodeCache.getCurrentData().getData();
-                // getData()方法实现返回byte[]
-                System.out.println("数据发生变化: " + new String(ret));
-            }
-
-        });
+//        nodeCache.getListenable().addListener(new NodeCacheListener(){
+//
+//            @Override
+//            public void nodeChanged() throws Exception {
+//                // 节点发生变化，回调方法
+//                byte[] ret = nodeCache.getCurrentData().getData();
+//                // getData()方法实现返回byte[]
+//                System.out.println("数据发生变化: " + new String(ret));
+//            }
+//
+//        });
         InterProcessMutex lock = new InterProcessMutex(client, "/locker/order/555");
         for (int i =0;i<5;i++){
             lock.acquire();

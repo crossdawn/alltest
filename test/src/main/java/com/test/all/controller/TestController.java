@@ -36,6 +36,12 @@ public class TestController {
         b=100;
     }
 
+    @GetMapping(value = "/trx")
+    @Deprecated
+    public String trx(String flag) {
+        return testService.trx();
+    }
+
     @GetMapping(value = "/dead2")
     @Deprecated
     public Integer dead2(String flag) {
@@ -94,9 +100,9 @@ public class TestController {
 
     @GetMapping("/redis")
     public String redis() {
-        redissonTestService.lock();
+//        redissonTestService.lock();
         redissonTestService.lock2();
-        redissonTestService.lock3();
+//        redissonTestService.lock3();
 //        ThreadPoolExecutor threadPoolExecutor = null;
 //        threadPoolExecutor.submit(new Callable<Object>() {
 //        }).cancel();

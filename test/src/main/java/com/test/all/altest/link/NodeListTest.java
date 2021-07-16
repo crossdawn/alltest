@@ -1,4 +1,4 @@
-package com.test.all.altest;
+package com.test.all.altest.link;
 
 public class NodeListTest {
     public class ListNode{

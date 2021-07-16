@@ -43,5 +43,18 @@ public class MergeSort {
         }
     }
 
+//    public static void mergeSort(int[] arr,int low,int high,int temp){
+//        mergeSort();
+//        mergeSort();
+//        merge(arr,low,mid,high,temp);
+//    }
+
+    public static void mergeSort2(int[] arr,int low,int high,int[] temp){
+        int mid =(low+high)/2;
+        mergeSort2(arr,low,mid,temp);
+        mergeSort2(arr,low,mid,temp);
+        merge(arr,low,mid,high,temp);
+    }
+
 
 }

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class NumSum3 {
     public static void main(String[] args) throws Exception{
@@ -115,4 +117,59 @@ public class NumSum3 {
         }
         return ans;
     }
+    //1 2 2 4 3
+    public int findDuplicate(int[] nums) {
+        if(nums.length==0){
+            return 0;
+        }
+
+        for(int i=0;i<nums.length;i++){
+            if (nums[i]==i+1){
+                i++;
+                continue;
+            }
+            if(nums[i]==nums[nums[i]-1]){
+                return nums[i];
+            }
+            int temp = nums[i];
+            nums[i] =  nums[temp-1];
+            nums[temp-1] =temp;
+        }
+        return 0;
+    }
+
+
+
+//    public String longestPalindrome(String s) {
+//        char a ='啊';
+//        int start ,end,length,maxlength;
+//        int maxbegin ,maxend;
+//
+//
+////        for(){
+////
+////        }
+//        return s.substring(maxbegin,maxend+1);
+//    }
+    //(()) [) )) ]
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if('('==c){
+              stack.push(')');
+            }else if('['==c){
+                stack.push(']');
+            }else if('{'==c){
+                stack.push('}');
+            }else {
+                if(stack.isEmpty()||c!=stack.pop()){
+                   return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+
 }

@@ -31,6 +31,7 @@ public class CoinChange {
         return m[amount]==Integer.MAX_VALUE?-1:m[amount];
     }
 
+
 //    int change(int amount, vector<int>& coins) {
 //        int dp[amount+1];
 //        memset(dp, 0, sizeof(dp)); //初始化数组为0

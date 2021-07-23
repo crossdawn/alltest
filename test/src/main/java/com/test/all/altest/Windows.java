@@ -6,11 +6,11 @@ import java.util.LinkedList;
 public class Windows {
     public static void main(String[] args){
     int[] arr = {4,2,5,6,3,1,2,4};
-    printArray(getMaxWindow(arr,3));
+    printArray(maxSlidingWindow(arr,3));
         System.err.println(partition(arr,0,arr.length-1));
         System.err.println(Arrays.toString(arr));
 }
-
+        //[1,3,-1,-3,5,3,6,7], k = 3
     public static int[] getMaxWindow2(int[] arr, int w) {
         if(arr==null||w<1||arr.length<w){
             return null;
@@ -32,7 +32,6 @@ public class Windows {
         }
 
         return result;
-
     }
     public static int[] getMaxWindow(int[] arr, int w) {
         if (arr == null || w < 1 || arr.length < w) {
@@ -55,7 +54,28 @@ public class Windows {
         }
         return res;
     }
-
+    //{4,2,5,6,3,1,2,4}, k = 3
+    public static int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums == null || k < 1 || nums.length < k) {
+            return null;
+        }
+        LinkedList<Integer> qmax = new LinkedList<>();
+        int[] res = new int[nums.length - k + 1];
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
+            while (!qmax.isEmpty() && nums[qmax.peekLast()] <= nums[i]) {
+                qmax.pollLast();
+            }
+            qmax.addLast(i);
+            if (qmax.peekFirst() == i - k) {
+                qmax.pollFirst();
+            }
+            if (i >= k - 1) {
+                res[index++] = nums[qmax.peekFirst()];
+            }
+        }
+        return res;
+    }
     public static void printArray(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i]+" ");

@@ -3,7 +3,7 @@ package com.test.all.jdk.thread;
 import java.util.concurrent.TimeUnit;
 
 public class DemoTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Thread t = new Thread(()->{
             for(int i= 1;i<10000;i++){
                 System.err.println(i);
@@ -16,7 +16,7 @@ public class DemoTest {
         });
         t.setDaemon(true);
         t.start();
-//        t.join();
+        t.join();
         System.err.println("主线程开启");
     }
 }

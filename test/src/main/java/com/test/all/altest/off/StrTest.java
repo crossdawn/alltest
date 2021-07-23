@@ -2,6 +2,21 @@ package com.test.all.altest.off;
 
 public class StrTest {
 
+    public int findNumberOfLIS(int[] nums) {
+        //1 3 5 4 7
+        int i=1;
+        int num=0;
+        while (i<nums.length){
+            while (nums[i] > nums[i - 1]){
+                i++;
+            }
+            if(i<=nums.length){
+                num++;
+            }
+        }
+        return num;
+    }
+
     public static int edit(String s1,String s2){
         int m = s1.length();
         int n = s2.length();

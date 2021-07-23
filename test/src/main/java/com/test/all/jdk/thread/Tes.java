@@ -12,6 +12,8 @@ public class Tes {
         new Thread(() -> System.out.println("子线程获取threadLocal的主线程值：" + threadLocal.get())).start();
         Thread.sleep(100);
         inheritableThreadLocal.set("inheritableThreadLocal主线程的值");
+        System.err.println("父线程"+inheritableThreadLocal.get());
+        inheritableThreadLocal.remove();
         new Thread(() -> System.out.println("子线程获取inheritableThreadLocal的主线程值：" + inheritableThreadLocal.get())).start();
         AtomicInteger a = new AtomicInteger(Integer.MIN_VALUE);
         int index = a.getAndIncrement();

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class SortTest {
     public static void main(String[] args) {
-        int[] array = {1, 3, 5, 2, 4};
+        int[] array = {4, 3, 5, 2, 6};
         quickSort(array, 0, array.length - 1);
         System.err.println(Arrays.toString(array));
     }
@@ -51,14 +51,20 @@ public class SortTest {
                 j--;
             }
             array[i] = array[j];
+//            print(array);
             while (i < j && pivot >= array[i]) {
                 i++;
             }
             array[j] = array[i];
         }
         array[i] = pivot;
+        print(array);
         return i;
     }
 
+
+    private static void print(int[] array){
+        System.err.println(Arrays.toString(array));
+    }
 
 }

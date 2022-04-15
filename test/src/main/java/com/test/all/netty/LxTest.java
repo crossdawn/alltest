@@ -7,7 +7,7 @@ public class LxTest {
     public static void main(String args[]) {
         String str="12345";
         allContinuousSubArray(str);
-
+//        perm();
     }
     private static void perm(int[] array, int index, List<String> sub,List<List<String>> result) {
        if(index ==array.length){

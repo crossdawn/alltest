@@ -177,7 +177,7 @@ public class ListNode {
         while (cur!=null){
             ListNode next = cur.next;
             cur.next =pre;
-            pre =cur;
+            next =pre;
             cur = next;
         }
         return pre;
@@ -349,5 +349,19 @@ public class ListNode {
         }
     }
 
+    public ListNode rev3(ListNode root){
+        if(root==null||root.next==null){
+            return root;
+        }
+        ListNode pre =null;
+        ListNode cur =root;
+        while (cur.next!=null){
+            ListNode next =cur.next;
+            cur.next =pre;
+            next =pre;
+            cur = next;
+        }
+        return pre;
+    }
 
 }

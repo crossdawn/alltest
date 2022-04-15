@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
-Can-Redefine-Classes: true
+Premain-Class: com.myagent.AgentMainTraceAgent
 Agent-Class: com.myagent.AgentMainTraceAgent
+Can-Redefine-Classes: true
 Can-Retransform-Classes: true

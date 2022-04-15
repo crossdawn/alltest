@@ -18,7 +18,7 @@ public class WeightRoundBobin {
             TestServer server = list.get(i);
             totalWeight+=server.weight;
             server.currentWeight = server.weight+server.currentWeight;
-            if(maxNode==null||maxWeight<server.currentWeight){
+            if(maxNode==null||server.currentWeight>maxWeight){
                 maxNode =server;
                 maxWeight = server.currentWeight;
             }
@@ -44,5 +44,25 @@ public class WeightRoundBobin {
             }
         }
         count.forEach((k,v)-> System.err.println(k+"次数"+v));
+    }
+
+    public TestServer select2(List<TestServer> list){
+        TestServer maxNode = null;
+        int totalWeight = 0;
+        int maxWeight = 0;
+
+        for(int i = 0;i<list.size();i++){
+            TestServer server = list.get(i);
+            totalWeight+=server.weight;
+            server.currentWeight = server.weight+server.currentWeight;
+
+            if(maxNode == null||server.currentWeight>maxWeight){
+                maxNode = server;
+                maxWeight = server.currentWeight;
+            }
+
+        }
+        maxNode.currentWeight =maxNode.currentWeight-totalWeight;
+        return maxNode;
     }
 }

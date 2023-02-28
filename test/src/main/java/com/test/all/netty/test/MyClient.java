@@ -1,7 +1,7 @@
 //package com.test.all.netty.test;
 //
 //import com.sun.corba.se.impl.orbutil.concurrent.ReentrantMutex;
-//import com.test.all.controller.T;
+//import com.test.all.jdk.T;
 //import com.test.all.netty.ChineseProverbClientHandler;
 //import com.test.all.netty.ListNode;
 //import io.netty.bootstrap.Bootstrap;

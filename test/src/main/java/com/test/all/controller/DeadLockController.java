@@ -1,8 +1,9 @@
 package com.test.all.controller;
 
 
+import com.test.all.mysql.Tb1;
+import com.test.all.mysql.TestDAO;
 import com.test.all.mysql.TestService;
-import com.test.all.redis.RedissonTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,18 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.ManagementFactory;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
-@RequestMapping("/monitor")
+@RequestMapping("/lock")
 @RestController
 
-public class TestController {
+public class DeadLockController {
     @Autowired
     private TestService testService;
+
     @Autowired
-    private RedissonTestService redissonTestService;
+    private TestDAO testDAO;
 
     static Map<String,String> cache = new HashMap<>();
     static {
@@ -36,11 +36,6 @@ public class TestController {
         b=100;
     }
 
-    @GetMapping(value = "/trx")
-    @Deprecated
-    public String trx(String flag) {
-        return testService.trx();
-    }
 
     @GetMapping(value = "/dead2")
     @Deprecated
@@ -97,21 +92,21 @@ public class TestController {
         }
         return ""+a.n;
     }
-
-    @GetMapping("/redis")
-    public String redis() {
-//        redissonTestService.lock();
-        redissonTestService.lock2();
-//        redissonTestService.lock3();
-//        ThreadPoolExecutor threadPoolExecutor = null;
-//        threadPoolExecutor.submit(new Callable<Object>() {
-//        }).cancel();
-//        ArrayBlockingQueue;
-//        LinkedBlockingQueue;
-//        ThreadPoolExecutor.DiscardOldestPolicy
-
-        return "1";
-    }
+//
+//    @GetMapping("/redis")
+//    public String redis() {
+////        redissonTestService.lock();
+//        redissonTestService.lock2();
+////        redissonTestService.lock3();
+////        ThreadPoolExecutor threadPoolExecutor = null;
+////        threadPoolExecutor.submit(new Callable<Object>() {
+////        }).cancel();
+////        ArrayBlockingQueue;
+////        LinkedBlockingQueue;
+////        ThreadPoolExecutor.DiscardOldestPolicy
+//
+//        return "1";
+//    }
 
     @GetMapping("/class")
     public String classT() {
@@ -126,6 +121,5 @@ public class TestController {
         }
         return "1";
     }
-
 
 }

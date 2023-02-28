@@ -3,6 +3,7 @@ package com.test.all.altest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class Heap {
     public static void main(String[] args)throws NullPointerException {
@@ -46,7 +47,17 @@ public class Heap {
             }
         }
     }
+
+    public void heayinset(int[] arr)
+    {
+        for (int i = 0; i <arr.length ; i++) {
+
+        }
+    }
+
     public static void heapInsert1(int[] arr) {
+        PriorityQueue priorityQueue = new PriorityQueue();
+        priorityQueue.poll();
         for (int i = 0; i < arr.length; i++) {
             int cur = i;
             int father = (i-1)/2;
@@ -204,5 +215,29 @@ public class Heap {
         }
     }
 
+
+    private void heapInsert2(int[] array){
+        for(int i=0;i<array.length;i++){
+            int cur = array[i];
+            int father = (i-1)/2;
+            while (array[cur]>array[father]) {
+                swap(array,cur,father);
+                cur = father;
+                father = (cur-1)/2;
+            }
+        }
+    }
+
+    private void heapinsertt(int[] arr){
+        for (int i=0;i<arr.length;i++){
+            int cur = arr[i];
+            int father = (i-1)/2;
+            while (arr[cur]>arr[father]){
+                swap(arr,cur,father);
+                cur = father;
+                father = (cur-1)/2;
+            }
+        }
+    }
 
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.all.mysql.TestDAO">
+  <resultMap id="BaseResultMap" type="com.test.all.mysql.Tb1">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="f1_byte" jdbcType="BIGINT" property="f1Byte" />
+    <result column="f2_int" jdbcType="INTEGER" property="f2Int" />
+    <result column="f3_varchar" jdbcType="VARCHAR" property="f3Varchar" />
+    <result column="f4_datetime" jdbcType="INTEGER" property="f4Datetime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="select" resultMap="BaseResultMap">
+    select id, f1_byte, f2_int, f3_varchar, f4_datetime, create_time, update_time
+    from tb1 where ${sql}
+  </select>
+
+  <insert id="insertBatch" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+    insert into tb1 (f1_byte, f2_int, f3_varchar, f4_datetime,create_time,update_time
+      )
+    values 
+    <foreach collection="records" item="record" separator=",">
+       (#{record.f1Byte,jdbcType=BIGINT},
+      #{record.f2Int,jdbcType=BIGINT},
+      #{record.f3Varchar,jdbcType=INTEGER},
+        #{record.f4Datetime,jdbcType=VARCHAR},
+        #{record.createTime,jdbcType=TIMESTAMP},
+      #{record.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+</mapper>

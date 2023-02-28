@@ -1,15 +1,14 @@
 package com.test.all.mysql;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TestDAO {
 
-    @Select("select 1 ")
-    int select();
+    List<Tb1> select(String sql);
 
-    @Insert("insert into t(a) values (2)")
-    int insert();
+    int insertBatch(@Param("records") List<Tb1> records);
 }

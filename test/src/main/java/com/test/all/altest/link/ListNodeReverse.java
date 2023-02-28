@@ -14,7 +14,7 @@ public class ListNodeReverse {
         listNode3.next =listNode4;
         listNode4.next =listNode5;
         print(head);
-        ListNode newHead = reverse(head);
+        ListNode newHead = reverse1(head);
         print(newHead);
         System.err.println(Float.MAX_VALUE);
     }
@@ -30,6 +30,21 @@ public class ListNodeReverse {
             cur.next =pre;
             pre = cur;
             cur = temp;
+        }
+        return pre;
+    }
+
+    public static ListNode reverse1(ListNode head){
+        if(head==null||head.next==null){
+            return head;
+        }
+        ListNode pre = null;
+        ListNode next =null;
+        while (head!=null){
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
         }
         return pre;
     }

@@ -1,4 +1,4 @@
-package com.test.all.controller;
+package com.test.all.jdk;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -60,7 +60,7 @@ public class TeslOCK {
         t2.start();
         t3.start();
         t4.start();
-//        t5.start();
+        t5.start();
 
 
 

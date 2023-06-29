@@ -3,9 +3,7 @@ package com.test.all.controller;
 import com.test.all.mysql.TestDAO;
 import com.test.all.mysql.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequestMapping("/mysql")
@@ -17,6 +15,18 @@ public class MysqlController {
 
     @Autowired
     private TestDAO testDAO;
+
+    @GetMapping(value = "/test500")
+    @Deprecated
+    public Integer test500(@RequestParam(required = true) Integer a) {
+        throw new RuntimeException();
+    }
+
+    @PostMapping(value = "/test400")
+    @Deprecated
+    public Integer test400() {
+        throw new RuntimeException();
+    }
 
     @GetMapping(value = "/trx")
     @Deprecated

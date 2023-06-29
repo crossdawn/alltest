@@ -17,6 +17,12 @@
     <artifactId>test</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.29.2-GA</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-core</artifactId>
             <version>${grpc.version}</version>

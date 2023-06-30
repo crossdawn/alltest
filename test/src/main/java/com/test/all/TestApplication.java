@@ -23,6 +23,7 @@ public class TestApplication {
                 .sources(TestApplication.class).web(WebApplicationType.SERVLET).run(args);
         applicationContext.registerShutdownHook();
 //        applicationContext.close();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> System.err.println("shutdown hook, jvm demo")));
 
     }
 }
